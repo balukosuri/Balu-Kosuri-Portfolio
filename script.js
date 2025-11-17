@@ -24,7 +24,7 @@ function animateCursor() {
 animateCursor();
 
 // Hover effects for interactive elements
-document.querySelectorAll('a, button, .nav-link, .tool-tag, .portfolio-list a').forEach(elem => {
+document.querySelectorAll('a, button, .nav-link, .tool-tag, .portfolio-list a, .about-text').forEach(elem => {
     elem.addEventListener('mouseenter', () => {
         cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
     });
@@ -450,12 +450,64 @@ class TestimonialFormatter {
     }
 }
 
+// About Me Markdown Hover Functionality
+function initAboutMarkdownHover() {
+    const aboutText = document.querySelector('.about-text');
+    const markdownCode = document.querySelector('.about-markdown-code');
+
+    if (!aboutText || !markdownCode) return;
+
+    // Get data from attributes
+    const intro = aboutText.dataset.intro;
+    const details = aboutText.dataset.details;
+    const quote = aboutText.dataset.quote;
+
+    // Generate markdown content
+    const markdown = `# About Me
+
+## Introduction
+
+${intro}
+
+## Background
+
+${details}
+
+## Philosophy
+
+> ${quote}
+
+---
+
+**Format:** Markdown
+**Last Updated:** ${new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+})}
+
+---
+
+### Tags
+\`technical-writing\` \`documentation\` \`api-docs\` \`content-strategy\`
+
+---
+
+_Hover away to see the normal view_`;
+
+    // Populate the markdown view
+    markdownCode.textContent = markdown;
+}
+
 // Initialize all testimonial cards
 document.addEventListener('DOMContentLoaded', () => {
     const testimonialCards = document.querySelectorAll('.testimonial-card');
     testimonialCards.forEach(card => {
         new TestimonialFormatter(card);
     });
+
+    // Initialize About Me markdown hover
+    initAboutMarkdownHover();
 });
 
 // Update hover effects for format buttons
