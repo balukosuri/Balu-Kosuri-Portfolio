@@ -345,3 +345,126 @@ const debouncedScroll = debounce(() => {
 window.addEventListener('scroll', debouncedScroll);
 
 console.log('Portfolio initialized successfully! 🎨');
+
+// Testimonial Format Toggle Functionality
+class TestimonialFormatter {
+    constructor(card) {
+        this.card = card;
+        this.name = card.dataset.name;
+        this.title = card.dataset.title;
+        this.text = card.dataset.text;
+        this.buttons = card.querySelectorAll('.format-btn');
+        this.views = {
+            normal: card.querySelector('.normal-view'),
+            markdown: card.querySelector('.markdown-view'),
+            xml: card.querySelector('.xml-view')
+        };
+
+        this.init();
+    }
+
+    init() {
+        // Populate markdown and XML views
+        this.populateMarkdownView();
+        this.populateXMLView();
+
+        // Add click handlers to buttons
+        this.buttons.forEach(btn => {
+            btn.addEventListener('click', () => this.switchFormat(btn.dataset.format));
+        });
+    }
+
+    switchFormat(format) {
+        // Update active button
+        this.buttons.forEach(btn => btn.classList.remove('active'));
+        this.card.querySelector(`[data-format="${format}"]`).classList.add('active');
+
+        // Update active view
+        Object.values(this.views).forEach(view => view.classList.remove('active'));
+        this.views[format].classList.add('active');
+
+        // Add animation class
+        this.views[format].style.animation = 'none';
+        setTimeout(() => {
+            this.views[format].style.animation = 'fadeInScale 0.4s ease forwards';
+        }, 10);
+    }
+
+    populateMarkdownView() {
+        const markdownCode = this.views.markdown.querySelector('.markdown-code');
+        const markdown = this.generateMarkdown();
+        markdownCode.textContent = markdown;
+    }
+
+    populateXMLView() {
+        const xmlCode = this.views.xml.querySelector('.xml-code');
+        const xml = this.generateXML();
+        xmlCode.textContent = xml;
+    }
+
+    generateMarkdown() {
+        return `# Testimonial
+
+## ${this.name}
+**${this.title}**
+
+---
+
+### Review
+
+> ${this.text}
+
+---
+
+*Format: Markdown*
+*Generated: ${new Date().toLocaleDateString()}*`;
+    }
+
+    generateXML() {
+        const escapeXML = (str) => {
+            return str.replace(/[<>&'"]/g, (char) => {
+                switch (char) {
+                    case '<': return '&lt;';
+                    case '>': return '&gt;';
+                    case '&': return '&amp;';
+                    case "'": return '&apos;';
+                    case '"': return '&quot;';
+                }
+            });
+        };
+
+        return `<?xml version="1.0" encoding="UTF-8"?>
+<testimonial>
+  <client>
+    <name>${escapeXML(this.name)}</name>
+    <title>${escapeXML(this.title)}</title>
+  </client>
+  <content>
+    <text>${escapeXML(this.text)}</text>
+    <metadata>
+      <format>XML</format>
+      <generated>${new Date().toISOString()}</generated>
+    </metadata>
+  </content>
+</testimonial>`;
+    }
+}
+
+// Initialize all testimonial cards
+document.addEventListener('DOMContentLoaded', () => {
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    testimonialCards.forEach(card => {
+        new TestimonialFormatter(card);
+    });
+});
+
+// Update hover effects for format buttons
+document.querySelectorAll('.format-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+});
