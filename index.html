@@ -8,10 +8,11 @@
     <meta name="author" content="Balasubramanyam Kosuri">
     <title>Balasubramanyam Kosuri - Technical Writer Portfolio</title>
 
-    <!-- Google Fonts -->
+    <!-- Stranger Things Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Benguiat+Pro:wght@400;700&family=Courier+Prime:wght@400;700&family=Special+Elite&family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Rubik+Glitch&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,32 +21,60 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Custom Pen Cursor -->
-    <div class="custom-cursor pen-cursor">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 19L5 12L12 5" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M19 12H5" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <!-- CRT Scanline Overlay -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- Vignette Effect -->
+    <div class="vignette"></div>
+
+    <!-- Particle Effects -->
+    <div id="particles-container"></div>
+
+    <!-- Background Music Player -->
+    <div class="music-player">
+        <button id="music-toggle" class="music-btn" title="Play/Pause Stranger Things Theme">
+            <i class="fas fa-music"></i>
+        </button>
+        <div class="music-info">
+            <span>Stranger Things Theme</span>
+            <div class="audio-visualizer">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
     </div>
 
-    <!-- Floating Typewriter Elements -->
-    <div class="floating-elements">
-        <svg class="typewriter typewriter-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="40" width="160" height="100" rx="5" fill="#FFE5CC" stroke="#FF6B35" stroke-width="2"/>
-            <rect x="30" y="60" width="140" height="3" fill="#FF6B35"/>
-            <rect x="30" y="75" width="140" height="3" fill="#FF8C66"/>
-            <rect x="30" y="90" width="100" height="3" fill="#FFD23F"/>
+    <!-- Hidden Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_2c95b5652c.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Custom Cursor (Flashlight) -->
+    <div class="custom-cursor flashlight-cursor">
+        <div class="flashlight-beam"></div>
+    </div>
+
+    <!-- Demogorgon Silhouettes -->
+    <div class="demogorgon-container">
+        <svg class="demogorgon demogorgon-1" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="100" cy="80" rx="60" ry="70" fill="#0a0a0a" opacity="0.8"/>
+            <circle cx="85" cy="70" r="8" fill="#ff0000" opacity="0.6"/>
+            <circle cx="115" cy="70" r="8" fill="#ff0000" opacity="0.6"/>
+            <path d="M 70 90 Q 100 110 130 90" stroke="#8B0000" stroke-width="3" fill="none"/>
+            <rect x="85" y="150" width="10" height="80" fill="#0a0a0a" opacity="0.8"/>
+            <rect x="105" y="150" width="10" height="80" fill="#0a0a0a" opacity="0.8"/>
+            <path d="M 60 50 L 50 30 L 55 50 Z" fill="#0a0a0a"/>
+            <path d="M 70 45 L 60 25 L 65 45 Z" fill="#0a0a0a"/>
+            <path d="M 130 45 L 140 25 L 135 45 Z" fill="#0a0a0a"/>
+            <path d="M 140 50 L 150 30 L 145 50 Z" fill="#0a0a0a"/>
         </svg>
 
-        <svg class="typewriter typewriter-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="50" width="140" height="90" rx="5" fill="#FFDDC1" stroke="#FF6B35" stroke-width="2"/>
-            <circle cx="100" cy="95" r="15" fill="#FF6B35"/>
-        </svg>
-
-        <svg class="typewriter typewriter-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect x="40" y="60" width="120" height="80" rx="5" fill="#FFCCB3" stroke="#FF6B35" stroke-width="2"/>
-            <rect x="50" y="75" width="100" height="2" fill="#FF6B35"/>
-            <rect x="50" y="85" width="100" height="2" fill="#FF8C66"/>
+        <svg class="demogorgon demogorgon-2" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="100" cy="80" rx="60" ry="70" fill="#0a0a0a" opacity="0.7"/>
+            <circle cx="85" cy="70" r="8" fill="#ff0000" opacity="0.5"/>
+            <circle cx="115" cy="70" r="8" fill="#ff0000" opacity="0.5"/>
+            <rect x="85" y="150" width="10" height="80" fill="#0a0a0a" opacity="0.7"/>
+            <rect x="105" y="150" width="10" height="80" fill="#0a0a0a" opacity="0.7"/>
         </svg>
     </div>
 
@@ -72,24 +101,41 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
+        <!-- Christmas Lights Wall Background -->
+        <div class="christmas-lights-wall">
+            <div class="alphabet-grid" id="alphabet-grid"></div>
+        </div>
+
+        <!-- Floating Spores/Particles -->
+        <div class="floating-spores">
+            <div class="spore"></div>
+            <div class="spore"></div>
+            <div class="spore"></div>
+            <div class="spore"></div>
+            <div class="spore"></div>
+        </div>
 
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="line-1">BALU</span>
-                    <span class="line-2">Technical Writer</span>
-                    <span class="line-3">Making Complex Simple</span>
+                <h1 class="hero-title stranger-title">
+                    <span class="line-1" data-text="BALU">BALU</span>
+                    <span class="line-2 glitch" data-text="Technical Writer">Technical Writer</span>
+                    <span class="line-3" data-text="Making Complex Simple">Making Complex Simple</span>
                 </h1>
                 <p class="hero-subtitle">
-                    <span class="typing-text">Technical Writer</span>
+                    <span class="typing-text">From the Upside Down of Documentation</span>
                 </p>
+                <div class="message-wall">
+                    <div class="wall-message" id="wall-message">
+                        <span class="blinking-letter">R</span>
+                        <span class="blinking-letter">U</span>
+                        <span class="blinking-letter">N</span>
+                    </div>
+                </div>
             </div>
 
             <div class="scroll-indicator">
-                <span>Scroll</span>
+                <span>Enter the Upside Down</span>
                 <div class="scroll-arrow"></div>
             </div>
         </div>

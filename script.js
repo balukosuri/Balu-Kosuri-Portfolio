@@ -1,4 +1,9 @@
-// Custom Pen Cursor
+// ============================
+//   STRANGER THINGS PORTFOLIO
+//   INTERACTIVE EFFECTS
+// ============================
+
+// Custom Flashlight Cursor
 const cursor = document.querySelector('.custom-cursor');
 let mouseX = 0, mouseY = 0;
 let cursorX = 0, cursorY = 0;
@@ -24,9 +29,9 @@ function animateCursor() {
 animateCursor();
 
 // Hover effects for interactive elements
-document.querySelectorAll('a, button, .nav-link, .tool-tag, .portfolio-list a, .about-text').forEach(elem => {
+document.querySelectorAll('a, button, .nav-link, .tool-tag, .portfolio-list a, .format-btn').forEach(elem => {
     elem.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        cursor.style.transform = 'translate(-50%, -50%) scale(1.3)';
     });
 
     elem.addEventListener('mouseleave', () => {
@@ -34,7 +39,106 @@ document.querySelectorAll('a, button, .nav-link, .tool-tag, .portfolio-list a, .
     });
 });
 
-// Mobile Menu Toggle
+// ============================
+// BACKGROUND MUSIC PLAYER
+// ============================
+const musicToggle = document.getElementById('music-toggle');
+const bgMusic = document.getElementById('bg-music');
+const audioVisualizer = document.querySelector('.audio-visualizer');
+let isPlaying = false;
+
+musicToggle?.addEventListener('click', () => {
+    if (isPlaying) {
+        bgMusic.pause();
+        musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+        audioVisualizer.style.opacity = '0.3';
+    } else {
+        bgMusic.play();
+        musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        audioVisualizer.style.opacity = '1';
+    }
+    isPlaying = !isPlaying;
+});
+
+// ============================
+// CHRISTMAS LIGHTS ALPHABET WALL
+// ============================
+function createAlphabetWall() {
+    const alphabetGrid = document.getElementById('alphabet-grid');
+    if (!alphabetGrid) return;
+
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    alphabet.split('').forEach((letter, index) => {
+        const lightDiv = document.createElement('div');
+        lightDiv.className = 'light-letter';
+        lightDiv.textContent = letter;
+        lightDiv.style.animationDelay = `${index * 0.1}s`;
+        alphabetGrid.appendChild(lightDiv);
+    });
+}
+
+// Create alphabet wall on load
+createAlphabetWall();
+
+// Animate specific letters for messages
+function blinkLetters(message, duration = 3000) {
+    const letters = document.querySelectorAll('.light-letter');
+
+    // Reset all letters
+    letters.forEach(letter => {
+        letter.style.opacity = '0.3';
+    });
+
+    // Blink message letters
+    message.split('').forEach((char, index) => {
+        const letter = Array.from(letters).find(l => l.textContent === char.toUpperCase());
+        if (letter) {
+            setTimeout(() => {
+                letter.style.opacity = '1';
+                letter.style.animation = 'light-flicker 0.5s infinite';
+            }, index * 300);
+        }
+    });
+
+    // Reset after duration
+    setTimeout(() => {
+        letters.forEach(letter => {
+            letter.style.opacity = '0.3';
+            letter.style.animation = 'light-flicker 3s infinite';
+        });
+    }, duration);
+}
+
+// Trigger messages periodically
+setInterval(() => {
+    const messages = ['RUN', 'HELP', 'BALU', 'CODE'];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    blinkLetters(randomMessage, 2000);
+}, 15000);
+
+// ============================
+// PARTICLE EFFECTS
+// ============================
+function createParticles() {
+    const container = document.getElementById('particles-container');
+    if (!container) return;
+
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+    }
+}
+
+createParticles();
+
+// ============================
+// MOBILE MENU TOGGLE
+// ============================
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -43,7 +147,9 @@ hamburger?.addEventListener('click', () => {
     hamburger.classList.toggle('active');
 });
 
-// Smooth Scrolling
+// ============================
+// SMOOTH SCROLLING
+// ============================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -53,25 +159,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 behavior: 'smooth',
                 block: 'start'
             });
-            // Close mobile menu if open
             navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
         }
     });
 });
 
-// Navbar Background on Scroll
+// ============================
+// NAVBAR EFFECTS ON SCROLL
+// ============================
 const navbar = document.querySelector('.navbar');
 let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
+    // Enhanced glow on scroll
     if (currentScroll > 100) {
-        navbar.style.background = 'rgba(255, 248, 243, 0.98)';
-        navbar.style.boxShadow = '0 5px 30px rgba(45, 24, 16, 0.15)';
+        navbar.style.boxShadow = '0 0 30px var(--st-neon-red), 0 0 60px var(--st-neon-red)';
     } else {
-        navbar.style.background = 'rgba(255, 248, 243, 0.95)';
-        navbar.style.boxShadow = '0 2px 20px rgba(45, 24, 16, 0.1)';
+        navbar.style.boxShadow = '0 0 20px var(--st-neon-red)';
     }
 
     // Hide/show navbar on scroll
@@ -84,25 +191,31 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// Parallax Scrolling for Floating Elements
-const floatingTypewriters = document.querySelectorAll('.typewriter');
-const floatingShapes = document.querySelectorAll('.floating-shape');
+// ============================
+// PARALLAX EFFECTS
+// ============================
+const demogorgons = document.querySelectorAll('.demogorgon');
+const spores = document.querySelectorAll('.spore');
 
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
 
-    floatingTypewriters.forEach((typewriter, index) => {
-        const speed = 0.5 + (index * 0.2);
-        typewriter.style.transform = `translateY(${scrolled * speed}px) rotate(${15 + scrolled * 0.02}deg)`;
+    // Demogorgon parallax
+    demogorgons.forEach((demo, index) => {
+        const speed = 0.3 + (index * 0.1);
+        demo.style.transform = `translateY(${scrolled * speed}px)`;
     });
 
-    floatingShapes.forEach((shape, index) => {
-        const speed = 0.3 + (index * 0.1);
-        shape.style.transform = `translateY(${scrolled * -speed}px)`;
+    // Spores parallax
+    spores.forEach((spore, index) => {
+        const speed = 0.2 + (index * 0.05);
+        spore.style.transform = `translateY(${-scrolled * speed}px)`;
     });
 });
 
-// Intersection Observer for Scroll Animations
+// ============================
+// INTERSECTION OBSERVER
+// ============================
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -118,7 +231,7 @@ const observer = new IntersectionObserver((entries) => {
                 const cards = entry.target.parentElement.querySelectorAll('.skill-card');
                 cards.forEach((card, index) => {
                     setTimeout(() => {
-                        card.style.animation = 'slideInUp 0.6s ease forwards';
+                        card.style.animation = 'slideInGlow 0.6s ease forwards';
                     }, index * 100);
                 });
             }
@@ -127,16 +240,23 @@ const observer = new IntersectionObserver((entries) => {
             if (entry.target.classList.contains('portfolio-card')) {
                 entry.target.style.animation = 'fadeIn 0.8s ease forwards';
             }
+
+            // Animate approach cards
+            if (entry.target.classList.contains('approach-card')) {
+                entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+            }
         }
     });
 }, observerOptions);
 
 // Observe elements
-document.querySelectorAll('.skill-card, .portfolio-card, .approach-card, .testimonial-card, .about-content').forEach(el => {
+document.querySelectorAll('.skill-card, .portfolio-card, .approach-card, .testimonial-card, .about-content, .article-card').forEach(el => {
     observer.observe(el);
 });
 
-// 3D Tilt Effect for Cards
+// ============================
+// 3D TILT EFFECT FOR CARDS
+// ============================
 class TiltCard {
     constructor(element) {
         this.element = element;
@@ -159,8 +279,8 @@ class TiltCard {
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
 
         this.element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
     }
@@ -172,13 +292,21 @@ class TiltCard {
 }
 
 // Apply 3D tilt to cards
-document.querySelectorAll('.skill-card, .portfolio-card, .approach-card').forEach(card => {
+document.querySelectorAll('.skill-card, .portfolio-card, .approach-card, .article-card').forEach(card => {
     new TiltCard(card);
 });
 
-// Typewriter Effect for Hero Subtitle
+// ============================
+// TYPEWRITER EFFECT
+// ============================
 const typewriterText = document.querySelector('.typing-text');
-const texts = ['Technical Writer', 'Content Strategist', 'API Documentation Expert', 'User Experience Advocate'];
+const texts = [
+    'From the Upside Down of Documentation',
+    'Technical Writer',
+    'API Documentation Expert',
+    'Content Strategist',
+    'Making Complex Simple'
+];
 let textIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
@@ -209,37 +337,61 @@ function typeWriter() {
 // Start typewriter effect
 setTimeout(typeWriter, 1500);
 
-// Floating Animation for Hero Decorations
-const heroDecorations = document.querySelectorAll('.floating-shape');
-heroDecorations.forEach((shape, index) => {
-    shape.style.animationDelay = `${index * 2}s`;
-});
+// ============================
+// WALL MESSAGE ANIMATION
+// ============================
+function animateWallMessage() {
+    const messages = [
+        ['R', 'U', 'N'],
+        ['H', 'E', 'L', 'P'],
+        ['B', 'A', 'L', 'U'],
+        ['C', 'O', 'D', 'E']
+    ];
 
-// Dynamic Year in Footer
+    let currentMessageIndex = 0;
+
+    setInterval(() => {
+        const wallMessage = document.getElementById('wall-message');
+        if (!wallMessage) return;
+
+        const message = messages[currentMessageIndex];
+        wallMessage.innerHTML = '';
+
+        message.forEach((letter, index) => {
+            const span = document.createElement('span');
+            span.className = 'blinking-letter';
+            span.textContent = letter;
+            span.style.animationDelay = `${index * 0.3}s`;
+            wallMessage.appendChild(span);
+        });
+
+        currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    }, 5000);
+}
+
+animateWallMessage();
+
+// ============================
+// DYNAMIC YEAR IN FOOTER
+// ============================
 const footer = document.querySelector('.footer p');
 if (footer) {
     const year = new Date().getFullYear();
     footer.textContent = `© ${year} Balasubramanyam Kosuri. All rights reserved.`;
 }
 
-// Add Loading Animation
+// ============================
+// PAGE LOAD ANIMATION
+// ============================
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
 
-// Scroll Progress Indicator
+// ============================
+// SCROLL PROGRESS INDICATOR
+// ============================
 const progressBar = document.createElement('div');
 progressBar.className = 'scroll-progress';
-progressBar.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #FF6B35, #FFD23F);
-    z-index: 10001;
-    transition: width 0.2s;
-`;
 document.body.appendChild(progressBar);
 
 window.addEventListener('scroll', () => {
@@ -248,7 +400,9 @@ window.addEventListener('scroll', () => {
     progressBar.style.width = scrolled + '%';
 });
 
-// Active Navigation Link
+// ============================
+// ACTIVE NAVIGATION LINK
+// ============================
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -272,81 +426,27 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Add CSS for active link
-const style = document.createElement('style');
-style.textContent = `
-    .nav-link.active {
-        color: var(--accent-poppy);
-    }
-    .nav-link.active::after {
-        width: 100%;
-    }
+// ============================
+// GLITCH EFFECT ON SCROLL
+// ============================
+let glitchTimeout;
+window.addEventListener('scroll', () => {
+    clearTimeout(glitchTimeout);
 
-    body.loaded * {
-        animation-play-state: running !important;
-    }
-
-    .fade-in {
-        animation: fadeIn 0.8s ease forwards;
-    }
-
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
-    }
-`;
-document.head.appendChild(style);
-
-// Smooth Page Load Animation
-document.addEventListener('DOMContentLoaded', () => {
-    const elements = document.querySelectorAll('.hero-title span, .hero-subtitle, .nav-link');
-    elements.forEach((el, index) => {
-        el.style.animation = `fadeIn 0.6s ease ${index * 0.1}s forwards`;
-        el.style.opacity = '0';
-    });
+    glitchTimeout = setTimeout(() => {
+        const glitchElements = document.querySelectorAll('.glitch');
+        glitchElements.forEach(elem => {
+            elem.style.animation = 'none';
+            setTimeout(() => {
+                elem.style.animation = 'glitch 5s infinite';
+            }, 10);
+        });
+    }, 100);
 });
 
-// Interactive Hover Sound Effect (Optional - requires audio files)
-const hoverSound = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
-hoverSound.volume = 0.2;
-
-document.querySelectorAll('button, a, .tool-tag').forEach(elem => {
-    elem.addEventListener('mouseenter', () => {
-        // Uncomment to enable sound
-        // hoverSound.play().catch(() => {});
-    });
-});
-
-// Performance optimization - Debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Apply debounce to scroll handlers
-const debouncedScroll = debounce(() => {
-    // Scroll-based animations
-}, 10);
-
-window.addEventListener('scroll', debouncedScroll);
-
-console.log('Portfolio initialized successfully! 🎨');
-
-// Testimonial Format Toggle Functionality
+// ============================
+// TESTIMONIAL FORMAT TOGGLE
+// ============================
 class TestimonialFormatter {
     constructor(card) {
         this.card = card;
@@ -364,26 +464,21 @@ class TestimonialFormatter {
     }
 
     init() {
-        // Populate markdown and XML views
         this.populateMarkdownView();
         this.populateXMLView();
 
-        // Add click handlers to buttons
         this.buttons.forEach(btn => {
             btn.addEventListener('click', () => this.switchFormat(btn.dataset.format));
         });
     }
 
     switchFormat(format) {
-        // Update active button
         this.buttons.forEach(btn => btn.classList.remove('active'));
         this.card.querySelector(`[data-format="${format}"]`).classList.add('active');
 
-        // Update active view
         Object.values(this.views).forEach(view => view.classList.remove('active'));
         this.views[format].classList.add('active');
 
-        // Add animation class
         this.views[format].style.animation = 'none';
         setTimeout(() => {
             this.views[format].style.animation = 'fadeInScale 0.4s ease forwards';
@@ -450,19 +545,19 @@ class TestimonialFormatter {
     }
 }
 
-// About Me Markdown Hover Functionality
+// ============================
+// ABOUT ME MARKDOWN HOVER
+// ============================
 function initAboutMarkdownHover() {
     const aboutText = document.querySelector('.about-text');
     const markdownCode = document.querySelector('.about-markdown-code');
 
     if (!aboutText || !markdownCode) return;
 
-    // Get data from attributes
     const intro = aboutText.dataset.intro;
     const details = aboutText.dataset.details;
     const quote = aboutText.dataset.quote;
 
-    // Generate markdown content
     const markdown = `# About Me
 
 ## Introduction
@@ -495,12 +590,14 @@ ${details}
 
 _Hover away to see the normal view_`;
 
-    // Populate the markdown view
     markdownCode.textContent = markdown;
 }
 
-// Initialize all testimonial cards
+// ============================
+// INITIALIZE ALL
+// ============================
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize testimonial cards
     const testimonialCards = document.querySelectorAll('.testimonial-card');
     testimonialCards.forEach(card => {
         new TestimonialFormatter(card);
@@ -508,15 +605,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize About Me markdown hover
     initAboutMarkdownHover();
-});
 
-// Update hover effects for format buttons
-document.querySelectorAll('.format-btn').forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
-    });
-
-    btn.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    // Add smooth fade-in on load
+    const elements = document.querySelectorAll('.hero-title span, .hero-subtitle, .nav-link');
+    elements.forEach((el, index) => {
+        el.style.animation = `fadeIn 0.6s ease ${index * 0.1}s forwards`;
+        el.style.opacity = '0';
     });
 });
+
+// ============================
+// RANDOM FLICKER EFFECTS
+// ============================
+setInterval(() => {
+    const randomElements = document.querySelectorAll('.light-letter, .blinking-letter');
+    const randomElement = randomElements[Math.floor(Math.random() * randomElements.length)];
+
+    if (randomElement) {
+        randomElement.style.opacity = '0.2';
+        setTimeout(() => {
+            randomElement.style.opacity = '1';
+        }, 100);
+    }
+}, 3000);
+
+// ============================
+// DEMOGORGON INTERACTION
+// ============================
+document.querySelectorAll('.demogorgon').forEach(demo => {
+    demo.addEventListener('mouseenter', () => {
+        demo.style.opacity = '0.4';
+        demo.style.filter = 'blur(0px)';
+        demo.style.transform = 'scale(1.2)';
+    });
+
+    demo.addEventListener('mouseleave', () => {
+        demo.style.opacity = '0.15';
+        demo.style.filter = 'blur(2px)';
+        demo.style.transform = 'scale(1)';
+    });
+});
+
+// ============================
+// PERFORMANCE OPTIMIZATION
+// ============================
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Log initialization
+console.log('%c🎬 STRANGER THINGS PORTFOLIO LOADED 🎬', 'color: #ff0000; font-size: 20px; font-weight: bold; text-shadow: 0 0 10px #ff0000;');
+console.log('%cWelcome to the Upside Down...', 'color: #00d9ff; font-size: 14px;');
